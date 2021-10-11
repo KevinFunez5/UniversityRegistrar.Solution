@@ -1,0 +1,33 @@
+@{
+  Layout = "_Layout";
+}
+
+@model University.Models.Department
+
+<h3>Department Details</h3>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.DepartmentName): @Html.DisplayFor(model => model.DepartmentName)</h3>
+
+@if(@Model.JoinEntities2.Count == 0)
+{
+  <p>This department does not contain any courses</p>
+}
+else
+{
+  <h4>Department the Course belongs to:</h4>
+  <ul>
+  @foreach(var join in Model.JoinEntities2)
+  {
+    <li>@join.Course.CourseName</li>
+    @using (Html.BeginForm("DeleteCourse", "Departments"))
+    {
+      @Html.Hidden("joinId", @join.DepartmentCourseId)
+      <input type="submit" value="Delete" class="btn btn-dark"/>
+    }
+  }
+  </ul>
+}
+  <p class="btn btn-dark">@Html.ActionLink("Add New Department", "Create")</p>
+  <p class="btn btn-dark">@Html.ActionLink("Back to departments", "Index")</p>
+  <p class="btn btn-dark">@Html.ActionLink("Edit Department", "Edit", new { id = Model.DepartmentId })</p>
+  <p class="btn btn-dark">@Html.ActionLink("Delete Department", "Delete", new { id = Model.DepartmentId })</p>
