@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using University.Models;
 
-namespace FileName
+namespace University
 {
   public class Startup
   {
@@ -12,16 +14,24 @@ namespace FileName
     {
       var builder = new ConfigurationBuilder()
           .SetBasePath(env.ContentRootPath)
-          .AddEnvironmentVariables();
+              .AddJsonFile("appsettings.json");
       Configuration = builder.Build();
     }
-    public IConfigurationRoot Configuration { get; }
+
+    public IConfigurationRoot Configuration { get; set; }
+
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
+
+      services.AddEntityFrameworkMySql()
+        .AddDbContext<UniversityContext>(options => options
+        .UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
     }
+
     public void Configure(IApplicationBuilder app)
     {
+      app.UseDeveloperExceptionPage();
       app.UseRouting();
 
       app.UseEndpoints(routes =>
@@ -29,12 +39,12 @@ namespace FileName
         routes.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
       });
 
+      app.UseStaticFiles();
+
       app.Run(async (context) =>
       {
-        //this line exists to help us know if there are errors:
         await context.Response.WriteAsync("Hello World!");
       });
-      app.UseDeveloperExceptionPage();
     }
   }
 }
