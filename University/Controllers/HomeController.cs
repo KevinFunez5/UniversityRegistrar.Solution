@@ -6,7 +6,7 @@ namespace University.Controllers
   public class HomeController : Controller
   {
     [Route("/")]
-    public ActionResult HomePage() 
+    public ActionResult Index() 
     { 
       return View(); 
     }

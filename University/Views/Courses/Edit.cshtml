@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+
+@model University.Models.Course
+
+<h3>Edit this Course: @Html.DisplayFor(model => model.Name)</h3>
+<hr>
+
+@using (Html.BeginForm())
+{
+  <div class="form-group">
+  @Html.HiddenFor(model => model.CourseId)
+
+  <p>Course @Html.LabelFor(model => model.Name)
+  @Html.EditorFor(model => model.Name, new { @class = "form-control" })</p>
+  </div>
+
+  <input type="submit" value="Save" class="btn btn-dark"/>
+}
+<br>
+<p class="btn btn-dark">@Html.ActionLink("Back to List", "Index")</p>
