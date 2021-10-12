@@ -73,13 +73,13 @@ namespace University
         return RedirectToAction("Index");
       }
 
-          [HttpPost]
-    public ActionResult DeleteCourse(int joinId)
-    {
-      var joinEntry = _db.CourseDepartment.FirstOrDefault(entry => entry.CourseDepartmentId == joinId);
-      _db.CourseDepartment.Remove(joinEntry);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
-    }
+      [HttpPost]
+      public ActionResult DeleteCourse(int joinId)
+      {
+        var joinEntry = _db.CourseDepartment.FirstOrDefault(entry => entry.CourseDepartmentId == joinId);
+        _db.CourseDepartment.Remove(joinEntry);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 }
