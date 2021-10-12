@@ -6,7 +6,7 @@
 
 <h3>Department Details</h3>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.DepartmentName): @Html.DisplayFor(model => model.DepartmentName)</h3>
+<h3>@Html.DisplayFor(model => model.DepartmentName) Department</h3>
 
 @if(@Model.JoinEntities2.Count == 0)
 {
@@ -14,15 +14,15 @@
 }
 else
 {
-  <h4>Department the Course belongs to:</h4>
+  <h4>Courses in the Department:</h4>
   <ul>
   @foreach(var join in Model.JoinEntities2)
   {
     <li>@join.Course.CourseName</li>
     @using (Html.BeginForm("DeleteCourse", "Departments"))
     {
-      @Html.Hidden("joinId", @join.DepartmentCourseId)
-      <input type="submit" value="Delete" class="btn btn-dark"/>
+      @Html.Hidden("joinId", @join.CourseDepartmentId)
+    <input type="submit" value="Delete" class="btn btn-dark"/>
     }
   }
   </ul>

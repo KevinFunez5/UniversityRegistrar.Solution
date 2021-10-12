@@ -1,12 +1,10 @@
 namespace University.Models
 {
-  public class DepartmentCourse
+  public class CourseDepartment
   {
-    public int DepartmentCourseId { get; set; }
+    public int CourseDepartmentId { get; set; }
     public int DepartmentId { get; set; }
     public int CourseId { get; set; }
-    public string DepartmentName { get; set; }
-    public string CourseName { get; set; }
     public virtual Department Department { get; set; }
     public virtual Course Course { get; set; }
   }

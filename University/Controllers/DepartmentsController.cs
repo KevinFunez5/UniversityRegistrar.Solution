@@ -24,19 +24,13 @@ namespace University
 
       public ActionResult Create()
       {
-        ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseName");
         return View();
       }
 
     [HttpPost]
-    public ActionResult Create(Department department, int CourseId)
+    public ActionResult Create(Department department)
     {
       _db.Departments.Add(department);
-      _db.SaveChanges();
-      if (CourseId != 0)
-      {
-        _db.DepartmentCourse.Add(new DepartmentCourse() { CourseId = CourseId, DepartmentId = department.DepartmentId });
-      }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
@@ -53,37 +47,15 @@ namespace University
     public ActionResult Edit(int id)
     {
       var thisDepartment = _db.Departments.FirstOrDefault(department => department.DepartmentId == id);
-      ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseName");
       return View(thisDepartment);
     }
 
       [HttpPost]
-      public ActionResult Edit(Department department, int CourseId)
+      public ActionResult Edit(Department department)
       {
-        if (CourseId != 0)
-        {
-          _db.DepartmentCourse.Add(new DepartmentCourse() { CourseId = CourseId, DepartmentId = department.DepartmentId});
-        }
           _db.Entry(department).State = EntityState.Modified;
           _db.SaveChanges();
           return RedirectToAction("Index");
-      }
-
-      public ActionResult AddCourse(int id)
-      {
-        var thisDepartment = _db.Departments.FirstOrDefault(department => department.DepartmentId == id);
-        ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseName");
-        return View(thisDepartment);
-      }
-      [HttpPost]
-      public ActionResult AddCourse(Department department, int CourseId)
-      {
-        if (CourseId != 0)
-        {
-          _db.DepartmentCourse.Add(new DepartmentCourse() { CourseId = CourseId, DepartmentId = department.DepartmentId });
-        }
-        _db.SaveChanges();
-        return RedirectToAction("Index");
       }
 
       public ActionResult Delete(int id)
@@ -100,5 +72,14 @@ namespace University
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
+
+          [HttpPost]
+    public ActionResult DeleteCourse(int joinId)
+    {
+      var joinEntry = _db.CourseDepartment.FirstOrDefault(entry => entry.CourseDepartmentId == joinId);
+      _db.CourseDepartment.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
     }
 }

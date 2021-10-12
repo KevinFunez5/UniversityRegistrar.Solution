@@ -23,7 +23,7 @@ namespace University.Controllers
 
     public ActionResult Create()
     {
-      ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+      ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "CourseName");
       return View();
     }
 

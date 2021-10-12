@@ -8,7 +8,7 @@ using University.Models;
 namespace University.Migrations
 {
     [DbContext(typeof(UniversityContext))]
-    [Migration("20211011230257_Initial")]
+    [Migration("20211012185433_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,27 @@ namespace University.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("University.Models.CourseDepartment", b =>
+                {
+                    b.Property<int>("CourseDepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseDepartmentId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("CourseDepartment");
+                });
+
             modelBuilder.Entity("University.Models.Department", b =>
                 {
                     b.Property<int>("DepartmentId")
@@ -44,33 +65,6 @@ namespace University.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("University.Models.DepartmentCourse", b =>
-                {
-                    b.Property<int>("DepartmentCourseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CourseName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DepartmentName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("DepartmentCourseId");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("DepartmentCourse");
                 });
 
             modelBuilder.Entity("University.Models.Student", b =>
@@ -108,7 +102,7 @@ namespace University.Migrations
                     b.ToTable("StudentCourse");
                 });
 
-            modelBuilder.Entity("University.Models.DepartmentCourse", b =>
+            modelBuilder.Entity("University.Models.CourseDepartment", b =>
                 {
                     b.HasOne("University.Models.Course", "Course")
                         .WithMany("JoinEntities2")

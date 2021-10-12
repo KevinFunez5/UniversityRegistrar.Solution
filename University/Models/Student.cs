@@ -7,10 +7,11 @@ namespace University.Models
     public Student()
     {
         this.JoinEntities = new HashSet<StudentCourse>();
+        
     }
 
     public int StudentId { get; set; }
     public string Name { get; set; }
-    public virtual ICollection<StudentCourse> JoinEntities { get; set;}
+    public virtual ICollection<StudentCourse> JoinEntities { get; }
   }
 }
